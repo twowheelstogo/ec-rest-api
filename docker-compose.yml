@@ -1,0 +1,15 @@
+
+version: '3.4'
+networks:
+  web:
+    external:
+      name: web
+services:
+  rest_api:
+    image: luiscelano/ec-rest-api:1.0.0-beta
+    build:
+      context: .
+    networks:
+        web:
+    ports:
+      - 5000:5000

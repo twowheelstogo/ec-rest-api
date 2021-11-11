@@ -1,0 +1,26 @@
+query productsByTagId($shopId: ID!, $tagId: ID!, $after: ConnectionCursor, $before: ConnectionCursor, $first: ConnectionLimitInt, $last: ConnectionLimitInt, $offset: Int){
+    productsByTagId(shopId: $shopId, tagId: $tagId, after: $after, before: $before, first: $first, last: $last, offset: $offset){
+        edges{
+            cursor
+            node{
+                _id
+                createdAt
+                position
+                title
+            }
+        }
+        nodes{
+            _id
+            createdAt
+            position
+            title
+        }
+        pageInfo{
+            endCursor
+            hasNextPage
+            hasPreviousPage
+            startCursor
+        }
+        totalCount
+    }
+}

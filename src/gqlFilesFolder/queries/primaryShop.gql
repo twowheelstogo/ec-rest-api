@@ -1,0 +1,6 @@
+query primaryShop{
+    primaryShop{
+        _id
+        name
+    }
+}

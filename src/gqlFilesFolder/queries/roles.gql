@@ -1,0 +1,22 @@
+query roles($shopId: ID!, $after: ConnectionCursor, $before: ConnectionCursor, $first: ConnectionLimitInt, $last: ConnectionLimitInt, $offset: Int, $sortOrder: SortOrder, $sortBy: RoleSortByField){
+    roles(shopId: $shopId, after: $after, before: $before, first: $first, last: $last, offset: $offset, sortOrder: $sortOrder, sortBy: $sortBy){
+        edges{
+            cursor
+            node{
+                _id
+                name
+            }
+        }
+        nodes{
+            _id
+            name
+        }
+        pageInfo{
+            endCursor
+            hasNextPage
+            hasPreviousPage
+            startCursor
+        }
+        totalCount
+    }
+}

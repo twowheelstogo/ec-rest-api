@@ -1,0 +1,20 @@
+query vendors($shopIds: [ID], $tagIds: [ID], $after: ConnectionCursor, $before: ConnectionCursor, $first: ConnectionLimitInt, $last: ConnectionLimitInt, $offset: Int, $sortOrder: SortOrder){
+    vendors(shopIds: $shopIds, tagIds: $tagIds, after: $after, before: $before, first: $first, last: $last, offset: $offset, sortOrder: $sortOrder){
+        edges{
+            cursor
+            node{
+                name
+            }
+        }
+        nodes{
+            name
+        }
+        pageInfo{
+            endCursor
+            hasNextPage
+            hasPreviousPage
+            startCursor
+        }
+        totalCount
+    }
+}

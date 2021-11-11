@@ -1,0 +1,32 @@
+query emailTemplates($shopId: ID!, $after: ConnectionCursor, $before: ConnectionCursor, $first: ConnectionLimitInt, $last: ConnectionLimitInt, $offset: Int){
+    emailTemplates(shopId: $shopId, after: $after, before: $before, first: $first, last: $last, offset: $offset){
+        edges{
+            cursor
+            node{
+                _id
+                language
+                name
+                shopId
+                subject
+                template
+                title
+            }
+        }
+        nodes{
+            _id
+            language
+            name
+            shopId
+            subject
+            template
+            title
+        }
+        pageInfo{
+            endCursor
+            hasNextPage
+            hasPreviousPage
+            startCursor
+        }
+        totalCount
+    }
+}

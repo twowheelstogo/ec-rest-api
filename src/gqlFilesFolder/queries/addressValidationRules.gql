@@ -1,0 +1,30 @@
+query addressValidationRules($after: ConnectionCursor, $before: ConnectionCursor, $first: ConnectionLimitInt, $last: ConnectionLimitInt, $offset: Int, $serviceNames: [String], $shopId: ID!, $sortOrder: SortOrder, $sortBy: AddressValidationRuleSortByField){
+    addressValidationRules(after: $after, before: $before, first: $first, last: $last, offset: $offset, serviceNames: $serviceNames, shopId: $shopId, sortOrder: $sortOrder, sortBy: $sortBy){
+        edges{
+            cursor
+            node{
+                _id
+                countryCodes
+                createdAt
+                serviceName
+                shopId
+                updatedAt
+            }
+        }
+        nodes{
+            _id
+            countryCodes
+            createdAt
+            serviceName
+            shopId
+            updatedAt
+        }
+        pageInfo{
+            endCursor
+            hasNextPage
+            hasPreviousPage
+            startCursor
+        }
+        totalCount
+    }
+}

@@ -1,0 +1,46 @@
+mutation addAccountAddressBookEntry($input: AddAccountAddressBookEntryInput!){
+    addAccountAddressBookEntry(input: $input){
+        address{
+            _id
+            description
+            address
+            reference
+            geolocation{
+                latitude
+                longitude
+            }
+            metaddress{
+                administrative_area_level_1
+                administrative_area_level_2
+                neighborhood
+                street_address
+                sublocality
+                distance{
+                    value
+                    text
+                }
+            }
+        }
+        addressEdge{
+            cursor
+            node{
+                _id
+                description
+                address
+                reference
+                geolocation{
+                    latitude
+                    longitude
+                }
+                metaddress{
+                    administrative_area_level_1
+                    administrative_area_level_2
+                    neighborhood
+                    street_address
+                    sublocality
+                }
+            }
+        }
+        clientMutationId
+    }
+}

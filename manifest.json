@@ -1,0 +1,32 @@
+{
+    "endpoints": {
+        "/items/:shopId/:language/:language1/:search": {
+            "get": {
+                "operation": "catalogItems",
+                "params": {
+                    "shopId": "shopId",
+                    "searchQuery": "search",
+                    "language": "language",
+                    "language1": "language1"
+                }
+            }
+        },
+        "/shop": {
+            "get": {
+                "operation": "primaryShop"
+            }
+        }
+    },
+    "errors": {
+        "errorCodes": {
+            "UNAUTHENTICATED": {
+                "httpCode": 401,
+                "errorDescription": "Forbidden: Unauthorized access"
+            },
+            "X-InternalServerError": {
+                "httpCode": 500,
+                "errorDescription": "Empty object: body parser"
+            }
+        }
+    }
+}

@@ -1,0 +1,10 @@
+query paymentMethods($shopId: ID!){
+    paymentMethods(shopId: $shopId){
+        canRefund
+        data
+        displayName
+        isEnabled
+        name
+        pluginName
+    }
+}
