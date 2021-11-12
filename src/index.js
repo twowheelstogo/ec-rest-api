@@ -8,9 +8,10 @@ const { createHttpLink } = require("apollo-link-http");
 const fetch = require("node-fetch");
 const log = console.log;
 const express = require("express");
+const https = require("https");
 const bodyParser = require("body-parser");
 // uncomment in case you have direct SSL (not proxy from cloudflare)
-//require('https').globalAgent.options.ca = require('ssl-root-cas').create();
+// require('https').globalAgent.options.ca = require('ssl-root-cas').create();
 // process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 const formatData = (data, status) => {
@@ -36,7 +37,15 @@ const server = () => {
 
     const headers = { Authorization: "" };
 
-    const link = createHttpLink({ uri: gqlServerUri, credentials: "same-origin", fetch, headers });
+    const link = createHttpLink({
+        uri: gqlServerUri,
+        credentials: "same-origin",
+        fetch,
+        headers,
+        fetchOptions: {
+            agent: new https.Agent({ rejectUnauthorized: false })
+        }
+    });
 
     /* GraphQL2REST execute function using apollo-link. Invokes GraphQL operation against gqlServerUri via node-fetch */
     const executeGqlLink = (operation) => {
