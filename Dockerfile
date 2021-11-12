@@ -26,6 +26,8 @@ RUN yarn install --production=false --ignore-scripts --non-interactive --no-cach
 
 ENV BUILD_ENV=production NODE_ENV=production
 
+ENV NODE_OPTIONS=--max_old_space_size=4096
+
 # hadolint ignore=SC2046
 
 # Install only prod dependencies now that we've built, to make the image smaller
