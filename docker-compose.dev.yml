@@ -16,7 +16,7 @@ services:
       context: .
     command: "./bin/start"
     volumes:
-      - ./package-lock.json:/usr/local/src/app/package-lock.json
-      - ./package.json:/usr/local/src/app/package.json
+      - .:/usr/local/src/app
+      - /usr/local/src/app/node_modules
     ports:
       - 5000:5000

@@ -137,3 +137,4 @@ dist
 #graphql files
 schema.graphql
 src/schema.graphql
+yarn.lock
