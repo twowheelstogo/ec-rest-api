@@ -9,6 +9,24 @@ services:
     image: luiscelano/ec-rest-api:1.0.0-beta
     build:
       context: .
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.rest-api.entrypoints=http"
+      - "traefik.http.routers.rest-api.rule=Host(`restapi.lulisgt.com`)"
+      - "traefik.http.middlewares.rest-api-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.api.middlewares=api-https-redirect"
+      #- "traefik.http.middlewares.web-https-redirect.replacepathregex.regex=^/pages/lulis-care"
+      #- "traefik.http.middlewares.web-https-redirect.replacepathregex.replacement=/es"
+      - "traefik.http.routers.rest-api-secure.entrypoints=https"
+      - "traefik.http.routers.rest-api-secure.rule=Host(`restapi.lulisgt.com`)"
+      - "traefik.http.routers.rest-api-secure.tls=true"
+      - "traefik.http.routers.rest-api-secure.service=api"
+      - "traefik.http.services.rest-api.loadbalancer.server.port=3000"
+      - "traefik.docker.network=web"
+      - "traefik.http.routers.rest-api-secure.tls.certresolver=le"
+      - "traefik.http.routers.rest-api-secure.tls.domains[0].main=lulisgt.com"
+      - "traefik.http.routers.rest-api-secure.tls.domains[0].sans=*.lulisgt.com"
+
     networks:
         web:
     ports:

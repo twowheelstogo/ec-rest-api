@@ -10,6 +10,8 @@ const log = console.log;
 const express = require("express");
 const https = require("https");
 const bodyParser = require("body-parser");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("../config/swagger.json");
 // uncomment in case you have direct SSL (not proxy from cloudflare)
 // require('https').globalAgent.options.ca = require('ssl-root-cas').create();
 // process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -29,6 +31,12 @@ const formatError = (graphQlErrorObj, httpStatusCode = 500) => {
         status: httpStatusCode
     }
 }
+
+var options = {
+    swaggerOptions: {
+        validatorUrl: null
+    }
+};
 
 //dasd
 const server = () => {
@@ -105,6 +113,8 @@ const server = () => {
     app.use(bodyParser.json());
     // restRouter now has our REST API attached
     app.use("/", restRouter);
+
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 
     app.listen(
         env.PORT,

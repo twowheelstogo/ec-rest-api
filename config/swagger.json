@@ -1,0 +1,48 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Open Commerce/Qubit API",
+        "version": "1.0.0-beta"
+    },
+    "servers": [
+        {
+            "url": "/api/v1",
+            "description": "Development server"
+        }
+    ],
+    "paths": {
+        "/shop": {
+            "get": {
+                "operationId": "primaryShop",
+                "parameters": {},
+                "responses": {
+                    "200": {
+                        "description": "Gets the primary shop",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Shop"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Shop": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "String"
+                    },
+                    "name": {
+                        "type": "String"
+                    }
+                }
+            }
+        }
+    }
+}
