@@ -11,8 +11,5 @@ services:
       context: .
     networks:
         web:
-    volumes:
-      - ./package-lock.json:/usr/local/src/app/package-lock.json
-      - ./package.json:/usr/local/src/app/package.json
     ports:
       - 5000:5000
