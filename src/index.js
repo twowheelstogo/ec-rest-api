@@ -15,8 +15,7 @@ const bodyParser = require("body-parser");
 // process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 const formatData = (data, status) => {
-    console.log('formatData', data, status);
-    return { message: true, status: 200 };
+    return { message: true, status: 200, ...data };
 
 }
 const formatError = (graphQlErrorObj, httpStatusCode = 500) => {
@@ -37,10 +36,37 @@ const server = () => {
 
     const headers = { Authorization: "" };
 
+    const customFetch = (uri, options) => {
+        const parsedBody = JSON.parse(options.body);
+
+        const body = JSON.stringify({
+            operationName: parsedBody.operationName,
+            variables: parsedBody.variables,
+            query: parsedBody.query
+        });
+        const updatedOptions = {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body
+        };
+
+        return fetch(uri, updatedOptions)
+            .then(response => {
+
+                if (response.status >= 500) {  // or handle 400 errors
+                    return Promise.reject(response.status);
+                }
+
+                return response;
+            });
+    };
+
     const link = createHttpLink({
         uri: gqlServerUri,
         credentials: "same-origin",
-        fetch,
+        fetch: customFetch,
         headers,
         fetchOptions: {
             agent: new https.Agent({ rejectUnauthorized: false })
@@ -63,6 +89,15 @@ const server = () => {
     };
 
     const restRouter = GraphQL2REST.init(schema, executeGqlLink, gql2restOptions, formatError, formatData);
+
+    const errorHandler = (err, req, res, next) => {
+        if (res.headersSent) {
+            return next(err);
+        }
+        const { status } = err;
+        res.status(status).json(err);
+    };
+    app.use(errorHandler);
 
     // parse application/json
     app.use(bodyParser.json());
