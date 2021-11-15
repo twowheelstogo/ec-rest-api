@@ -1,6 +1,5 @@
 FROM node:16-alpine
 
-RUN npm install -g nodemon
 # hadolint ignore=DL3018
 RUN apk --no-cache add bash curl less tini vim make
 SHELL ["/bin/bash", "-o", "pipefail", "-o", "errexit", "-u", "-c"]
@@ -25,7 +24,14 @@ USER root
 # removed --frozen-lockfile from yarn install
 RUN yarn install --production=false --ignore-scripts --non-interactive --no-cache
 
-ENV NODE_ENV=development
+ENV BUILD_ENV=production NODE_ENV=production
+
+# hadolint ignore=SC2046
+
+# Install only prod dependencies now that we've built, to make the image smaller
+# removed --frozen-lockfile from yarn install
+RUN rm -rf node_modules/*
+RUN yarn install --production=true --ignore-scripts --non-interactive
 
 # Bundle app source
 COPY . .
@@ -33,4 +39,4 @@ COPY . .
 EXPOSE 5000
 
 # If any Node flags are needed, they can be set in the NODE_OPTIONS env variable.
-CMD ["tini", "--", "yarn", "start:dev"]
+CMD ["tini", "--", "yarn", "start"]

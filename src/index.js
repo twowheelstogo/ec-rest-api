@@ -29,6 +29,8 @@ const formatError = (graphQlErrorObj, httpStatusCode = 500) => {
         status: httpStatusCode
     }
 }
+
+//dasd
 const server = () => {
     const app = express();
 

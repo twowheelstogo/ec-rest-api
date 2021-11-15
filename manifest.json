@@ -1,19 +1,21 @@
 {
     "endpoints": {
-        "/items/:shopId/:language/:language1/:search": {
-            "get": {
-                "operation": "catalogItems",
-                "params": {
-                    "shopId": "shopId",
-                    "searchQuery": "search",
-                    "language": "language",
-                    "language1": "language1"
-                }
-            }
-        },
         "/shop": {
             "get": {
                 "operation": "primaryShop"
+            }
+        },
+        "/orders": {
+            "get": {
+                "operation":"orders"
+            },
+            "post": {
+                "operation": "placeOrder"
+            }
+        },
+        "/catalog-items": {
+            "get": {
+                "operation": "catalogItems"
             }
         }
     },

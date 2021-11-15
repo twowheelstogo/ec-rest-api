@@ -1,0 +1,22 @@
+# This docker-compose file is used to run the project in Docker for development.
+# The local files are mounted into the created container.
+#
+# Usage:
+#  ln -s docker-compose.dev.yml docker-compose.override.yml
+#  docker-compose up [-d]
+#
+# To go back to running the published image:
+#  rm docker-compose.override.yml
+version: '3.4'
+
+services:
+  rest_api:
+    image: luiscelano/ec-rest-api-dev:1.0.0-beta
+    build:
+      context: .
+    command: "./bin/start"
+    volumes:
+      - ./package-lock.json:/usr/local/src/app/package-lock.json
+      - ./package.json:/usr/local/src/app/package.json
+    ports:
+      - 5000:5000
