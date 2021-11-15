@@ -12,8 +12,6 @@ version: '3.4'
 services:
   rest_api:
     image: luiscelano/ec-rest-api-dev:1.0.0-beta
-    build:
-      context: .
     command: "./bin/start"
     volumes:
       - .:/usr/local/src/app
