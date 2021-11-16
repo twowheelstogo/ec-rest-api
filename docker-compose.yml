@@ -6,7 +6,7 @@ networks:
       name: web
 services:
   rest_api:
-    image: luiscelano/ec-rest_api:1.0.0-beta
+    image: luiscelano/ec-rest-api:1.0.0-beta
     build:
       context: .
     labels:

@@ -49,18 +49,29 @@ const server = () => {
     const customFetch = (uri, options) => {
         const parsedBody = JSON.parse(options.body);
 
+        log("options", options);
+
         const body = JSON.stringify({
             operationName: parsedBody.operationName,
             variables: parsedBody.variables,
-            query: parsedBody.query
+            query: parsedBody.query,
         });
         const updatedOptions = {
             method: "POST",
             headers: {
-                "content-type": "application/json"
+                "content-type": "application/json",
             },
             body
         };
+
+        if (options.headers.authorization) {
+            Object.assign(updatedOptions, {
+                headers: {
+                    ...updatedOptions.headers,
+                    "Authorization": options.headers.authorization
+                }
+            });
+        }
 
         return fetch(uri, updatedOptions)
             .then(response => {

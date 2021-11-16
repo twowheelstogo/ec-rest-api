@@ -5,17 +5,23 @@
                 "operation": "primaryShop"
             }
         },
-        "/orders": {
+        "/orders/:shopId": {
             "get": {
-                "operation":"orders"
+                "operation":"orders",
+                "params": {
+                    "shopId": "shopId"
+                }
             },
             "post": {
                 "operation": "placeOrder"
             }
         },
-        "/catalog-items": {
+        "/catalog-items/:shopId": {
             "get": {
-                "operation": "catalogItems"
+                "operation": "catalogItems",
+                "params": {
+                    "shopId": "shopId"
+                }
             }
         }
     },

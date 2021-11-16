@@ -20,6 +20,7 @@
     "fs": "^0.0.1-security",
     "git-cz": "^4.7.6",
     "graphql": "^15.5.1",
+    "graphql-tag": "^2.12.6",
     "graphql2rest": "^0.6.4",
     "node-fetch": "^2.6.1",
     "nodemod": "^2.8.4",
