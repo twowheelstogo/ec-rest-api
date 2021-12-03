@@ -7,13 +7,16 @@
         },
         "/orders/:shopId": {
             "get": {
-                "operation":"orders",
+                "operation": "orders",
                 "params": {
                     "shopId": "shopId"
                 }
-            },
+            }
+        },
+        "/orders": {
             "post": {
-                "operation": "placeOrder"
+                "operation": "placeOrderFromDraftOrder",
+                "successStatusCode": 201
             }
         },
         "/catalog-items/:shopId": {
@@ -22,6 +25,31 @@
                 "params": {
                     "shopId": "shopId"
                 }
+            }
+        },
+        "cart/:shopId/:accountId": {
+            "get": {
+                "operation": "accountCartByAccountId",
+                "params": {
+                    "shopId": "shopId",
+                    "accountId": "accountId"
+                }
+            }
+        },
+        "cart": {
+            "post": {
+                "operation": "createDraftOrderCart",
+                "successStatusCode": 201
+            }
+        },
+        "cart/:cartId/cart-items/add": {
+            "post": {
+                "operation": "addDraftOrdersCartItems"
+            }
+        },
+        "cart/:cartId/cart-items/update": {
+            "post": {
+                "operation": "updateCartItemsQuantityFromDraftOrders"
             }
         }
     },
