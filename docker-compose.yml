@@ -1,9 +1,9 @@
 
 version: '3.4'
 networks:
-  web:
+  reaction:
     external:
-      name: web
+      name: reaction.localhost
 services:
   rest_api:
     image: luiscelano/ec-rest-api:1.0.0-beta
@@ -28,6 +28,7 @@ services:
       - "traefik.http.routers.rest_api-secure.tls.domains[0].sans=*.lulisgt.com"
 
     networks:
-        web:
+        default:
+        reaction:
     ports:
       - 5000:5000

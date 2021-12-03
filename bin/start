@@ -9,8 +9,8 @@ IFS="$(printf "\n\t")"
 cd "$(dirname "$0")/.."
 yarn install
 
-printf "root permissions"
-chown -R 1000:1000 "/root/.npm"
+# printf "root permissions"
+# chown -R 1000:1000 "/root/.npm"
 
 printf "installing dependencies"
 yarn start:dev

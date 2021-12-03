@@ -64,6 +64,8 @@ const server = () => {
             body
         };
 
+        console.log("updatedOptions", updatedOptions);
+
         if (options.headers.authorization) {
             Object.assign(updatedOptions, {
                 headers: {
