@@ -27,7 +27,7 @@
                 }
             }
         },
-        "cart/:shopId/:accountId": {
+        "/cart/:shopId/:accountId": {
             "get": {
                 "operation": "accountCartByAccountId",
                 "params": {
@@ -36,20 +36,58 @@
                 }
             }
         },
-        "cart": {
+        "/cart": {
             "post": {
                 "operation": "createDraftOrderCart",
                 "successStatusCode": 201
             }
         },
-        "cart/:cartId/cart-items/add": {
+        "/cart/:cartId/cart-items/add": {
             "post": {
-                "operation": "addDraftOrdersCartItems"
+                "operation": "addDraftOrderCartItems"
             }
         },
-        "cart/:cartId/cart-items/update": {
+        "/cart/:cartId/cart-items/update": {
             "post": {
                 "operation": "updateCartItemsQuantityFromDraftOrders"
+            }
+        },
+        "/draftOrder": {
+            "post": {
+                "operation": "placeDraftOrder"
+            }
+        },
+        "/cart/set-account": {
+            "post": {
+                "operation": "addDraftOrderAccount"
+            }
+        },
+        "/cart/fulfillment-option/select": {
+            "post": {
+                "operation": "selectFulfillmentOptionForGroupFromDraftOrder"
+            }
+        },
+        "/cart/shipping-address": {
+            "post": {
+                "operation": "setShippingAddressFromDraftOrder"
+            }
+        },
+        "/cart/fulfillment-option/update": {
+            "post": {
+                "operation": "updateFulfillmentOptionsForGroupFromDraftOrder"
+            }
+        },
+        "/cart/fulfillment-type": {
+            "post": {
+                "operation": "updateFulfillmentTypeForGroupFromDraftOrder"
+            }
+        },
+        "/accounts": {
+            "get": {
+                "operation": "accounts"
+            },
+            "post": {
+                "operation": "createAccountWithoutCredentials"
             }
         }
     },
