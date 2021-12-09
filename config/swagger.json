@@ -28,6 +28,114 @@
                     }
                 }
             }
+        },
+        "/orders/{shopId}": {
+            "get": {
+                "operationId": "orders",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "shopId",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get a list of orders by shop",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Orders"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cart": {
+            "post": {
+                "operationId": "createDraftOrderCart",
+                "summary": "Creates a new cart",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "input",
+                        "description": "The cart to create",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "input": {
+                                    "type": "object",
+                                    "properties": {
+                                        "createCartInput": {
+                                            "type": "object",
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "price": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "amount": {
+                                                                        "type": "number"
+                                                                    },
+                                                                    "currencyCode": {
+                                                                        "type": "string"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "productConfiguration": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "productId": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "productVariantId": {
+                                                                        "type": "string"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "quantity": {
+                                                                "type": "integer"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "shopId": {
+                                            "type": "string"
+                                        },
+                                        "draftOrderId": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Creates a new cart",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DraftOrder"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -36,10 +144,10 @@
                 "type": "object",
                 "properties": {
                     "_id": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "name": {
-                        "type": "String"
+                        "type": "string"
                     }
                 }
             },
@@ -47,7 +155,7 @@
                 "type": "object",
                 "properties": {
                     "_id": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "addressBook": {
                         "type": "object"
@@ -56,10 +164,10 @@
                         "type": "object"
                     },
                     "bio": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "createdAt": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "currency": {
                         "type": "object"
@@ -71,16 +179,16 @@
                         }
                     },
                     "firstName": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "language": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "phone": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "lastName": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "metafields": {
                         "type": "array",
@@ -89,28 +197,28 @@
                         }
                     },
                     "name": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "note": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "picture": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "preferences": {
                         "type": "object"
                     },
                     "primaryEmailAddress": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "updatedAt": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "userId": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "username": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "groups": {
                         "type": "object"
@@ -121,31 +229,31 @@
                 "type": "object",
                 "properties": {
                     "customerName": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "nit": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "address": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "country": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "depto": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "city": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "name": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "isCf": {
                         "type": "boolean"
                     },
                     "partnerId": {
-                        "type": "Integer"
+                        "type": "integer"
                     }
                 }
             },
@@ -153,13 +261,13 @@
                 "type": "object",
                 "properties": {
                     "sender": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "receiver": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "message": {
-                        "type": "String"
+                        "type": "string"
                     }
                 }
             },
@@ -170,13 +278,13 @@
                         "$ref": "#/components/schemas/Account"
                     },
                     "content": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "createdAt": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "updatedAt": {
-                        "type": "String"
+                        "type": "string"
                     }
                 }
             },
@@ -184,28 +292,28 @@
                 "type": "object",
                 "properties": {
                     "_id": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "orderId": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "account": {
                         "$ref": "#/components/schemas/Account"
                     },
                     "billingName": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "cartId": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "createdAt": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "displayStatus": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "email": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "fulfillmentGroups": {
                         "type": "array",
@@ -226,7 +334,7 @@
                         }
                     },
                     "referenceId": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "refunds": {
                         "type": "array",
@@ -238,16 +346,16 @@
                         "$ref": "#/components/schemas/Shop"
                     },
                     "status": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "summary": {
                         "type": "object"
                     },
                     "totalItemQuantity": {
-                        "type": "Integer"
+                        "type": "integer"
                     },
                     "updatedAt": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "surcharges": {
                         "type": "array",
@@ -262,7 +370,7 @@
                         "$ref": "#/components/schemas/GiftNote"
                     },
                     "deliveryDate": {
-                        "type": "String"
+                        "type": "string"
                     }
                 }
             },
@@ -270,40 +378,40 @@
                 "type": "object",
                 "properties": {
                     "_id": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "orderId": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "order": {
                         "$ref": "#/components/schemas/Order"
                     },
                     "referenceId": {
-                        "type": "Integer"
+                        "type": "integer"
                     },
                     "cartId": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "createdAt": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "updatedAt": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "cartToken": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "accountId": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "account": {
                         "$ref": "#/components/schemas/Account"
                     },
                     "shopId": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "status": {
-                        "type": "String",
+                        "type": "string",
                         "enum": [
                             "created",
                             "processing",
@@ -324,7 +432,7 @@
                         "type": "array"
                     },
                     "deliveryDate": {
-                        "type": "String"
+                        "type": "string"
                     }
                 }
             },
@@ -332,7 +440,7 @@
                 "type": "object",
                 "properties": {
                     "_id": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "account": {
                         "$ref": "#/components/schemas/Account"
@@ -341,13 +449,13 @@
                         "$ref": "#/components/schemas/Checkout"
                     },
                     "createdAt": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "email": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "expiresAt": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "items": {
                         "type": "object",
@@ -362,7 +470,7 @@
                                 "type": "object"
                             },
                             "totalCount": {
-                                "type": "Integer"
+                                "type": "integer"
                             }
                         }
                     },
@@ -373,16 +481,16 @@
                         }
                     },
                     "referenceId": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "shop": {
                         "$ref": "#/components/schemas/Shop"
                     },
                     "totalItemQuantity": {
-                        "type": "Integer"
+                        "type": "integer"
                     },
                     "updatedAt": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "surcharges": {
                         "type": "array"
@@ -416,16 +524,16 @@
                 "type": "object",
                 "properties": {
                     "_id": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "odooProduct": {
-                        "type": "Integer"
+                        "type": "integer"
                     },
                     "categoryVariant": {
-                        "type": "Integer"
+                        "type": "integer"
                     },
                     "addedAt": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "attributes": {
                         "type": "array",
@@ -437,7 +545,7 @@
                         "type": "object"
                     },
                     "createdAt": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "imageURLs": {
                         "type": "object"

@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-
+//mutations
 module.exports.echo = fs.readFileSync(path.join(__dirname, 'echo.gql'), 'utf8');
 module.exports.archiveMediaRecord = fs.readFileSync(path.join(__dirname, 'archiveMediaRecord.gql'), 'utf8');
 module.exports.createMediaRecord = fs.readFileSync(path.join(__dirname, 'createMediaRecord.gql'), 'utf8');

@@ -27,12 +27,21 @@
                 }
             }
         },
-        "/cart/:shopId/:accountId": {
+        "/cart/:shopId/account/:accountId": {
             "get": {
                 "operation": "accountCartByAccountId",
                 "params": {
                     "shopId": "shopId",
                     "accountId": "accountId"
+                }
+            }
+        },
+        "/cart/:cartId/:cartToken": {
+            "get": {
+                "operation": "anonymousCartByCartId",
+                "params": {
+                    "cartId": "cartId",
+                    "cartToken": "cartToken"
                 }
             }
         },
@@ -42,12 +51,12 @@
                 "successStatusCode": 201
             }
         },
-        "/cart/:cartId/cart-items/add": {
+        "/cart/cart-items/add": {
             "post": {
                 "operation": "addDraftOrderCartItems"
             }
         },
-        "/cart/:cartId/cart-items/update": {
+        "/cart/cart-items/update": {
             "post": {
                 "operation": "updateCartItemsQuantityFromDraftOrders"
             }
@@ -84,7 +93,10 @@
         },
         "/accounts": {
             "get": {
-                "operation": "accounts"
+                "operation": "accounts",
+                "params": {
+                    "language": "en"
+                }
             },
             "post": {
                 "operation": "createAccountWithoutCredentials"
