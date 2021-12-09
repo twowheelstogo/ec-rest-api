@@ -15,8 +15,7 @@
         },
         "/orders": {
             "post": {
-                "operation": "placeOrderFromDraftOrder",
-                "successStatusCode": 201
+                "operation": "placeOrderFromDraftOrder"
             }
         },
         "/catalog-items/:shopId": {
@@ -47,8 +46,7 @@
         },
         "/cart": {
             "post": {
-                "operation": "createDraftOrderCart",
-                "successStatusCode": 201
+                "operation": "createDraftOrderCart"
             }
         },
         "/cart/cart-items/add": {

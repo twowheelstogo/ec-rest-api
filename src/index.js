@@ -12,6 +12,7 @@ const https = require("https");
 const bodyParser = require("body-parser");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("../config/swagger.json");
+const mergeEnvVars = require("../util/mergeEnvVars");
 // uncomment in case you have direct SSL (not proxy from cloudflare)
 // require('https').globalAgent.options.ca = require('ssl-root-cas').create();
 // process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -38,6 +39,8 @@ var options = {
     }
 };
 
+//set the environment variables inside documentation manifest
+mergeEnvVars();
 //dasd
 const server = () => {
     const app = express();

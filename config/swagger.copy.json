@@ -28,6 +28,156 @@
                     }
                 }
             }
+        },
+        "/orders/{shopId}": {
+            "get": {
+                "operationId": "orders",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "shopId",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get a list of orders by shop",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Orders"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/draftOrder": {
+            "post": {
+                "operationId": "placeDraftOrder",
+                "summary": "Create a new draft order",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PlaceDraftOrderInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "A draft order created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DraftOrder"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cart": {
+            "post": {
+                "operationId": "createDraftOrderCart",
+                "summary": "Creates a new cart",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateCartInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Creates a new cart",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DraftOrder"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cart/cart-items/add": {
+            "post": {
+                "operationId": "addDraftOrderCartItems",
+                "summary": "Add item(s) to a cart",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AddCartItemsInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Item(s) added to a cart",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cart"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "cart/cart-items/update": {
+            "post": {
+                "operationId": "updateCartItemsQuantityFromDraftOrders",
+                "summary": "Update cart item(s) quantity. Use absolute quantity. If updating to 0, the item will be removed.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateCartItemsQuantityInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated cart item(s) quantity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cart"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "cart/set-account": {
+            "post": {
+                "operationId": "addDraftOrderAccount",
+                "summary": "Add a single account to the cart",
+                "requestBody": {
+                    
+                }
+            }
         }
     },
     "components": {
@@ -36,10 +186,233 @@
                 "type": "object",
                 "properties": {
                     "_id": {
-                        "type": "String"
+                        "type": "string"
                     },
                     "name": {
-                        "type": "String"
+                        "type": "string"
+                    }
+                }
+            },
+            "Account": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "addressBook": {
+                        "type": "object"
+                    },
+                    "adminUIShops": {
+                        "type": "object"
+                    },
+                    "bio": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "currency": {
+                        "type": "object"
+                    },
+                    "emailRecords": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "language": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "metafields": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "note": {
+                        "type": "string"
+                    },
+                    "picture": {
+                        "type": "string"
+                    },
+                    "preferences": {
+                        "type": "object"
+                    },
+                    "primaryEmailAddress": {
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    },
+                    "userId": {
+                        "type": "string"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "groups": {
+                        "type": "object"
+                    }
+                }
+            },
+            "BillingDetails": {
+                "type": "object",
+                "properties": {
+                    "customerName": {
+                        "type": "string"
+                    },
+                    "nit": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "depto": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "isCf": {
+                        "type": "boolean"
+                    },
+                    "partnerId": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "GiftNote": {
+                "type": "object",
+                "properties": {
+                    "sender": {
+                        "type": "string"
+                    },
+                    "receiver": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "OrderNote": {
+                "type": "object",
+                "properties": {
+                    "account": {
+                        "$ref": "#/components/schemas/Account"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Order": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "orderId": {
+                        "type": "string"
+                    },
+                    "account": {
+                        "$ref": "#/components/schemas/Account"
+                    },
+                    "billingName": {
+                        "type": "string"
+                    },
+                    "cartId": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "displayStatus": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "fulfillmentGroups": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "notes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/OrderNote"
+                        }
+                    },
+                    "payments": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "referenceId": {
+                        "type": "string"
+                    },
+                    "refunds": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "Shop": {
+                        "$ref": "#/components/schemas/Shop"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "summary": {
+                        "type": "object"
+                    },
+                    "totalItemQuantity": {
+                        "type": "integer"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    },
+                    "surcharges": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "billing": {
+                        "$ref": "#/components/schemas/BillingDetails"
+                    },
+                    "giftNote": {
+                        "$ref": "#/components/schemas/GiftNote"
+                    },
+                    "deliveryDate": {
+                        "type": "string"
                     }
                 }
             },
@@ -47,7 +420,379 @@
                 "type": "object",
                 "properties": {
                     "_id": {
-                        "type": "String"
+                        "type": "string"
+                    },
+                    "orderId": {
+                        "type": "string"
+                    },
+                    "order": {
+                        "$ref": "#/components/schemas/Order"
+                    },
+                    "referenceId": {
+                        "type": "integer"
+                    },
+                    "cartId": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    },
+                    "cartToken": {
+                        "type": "string"
+                    },
+                    "accountId": {
+                        "type": "string"
+                    },
+                    "account": {
+                        "$ref": "#/components/schemas/Account"
+                    },
+                    "shopId": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "created",
+                            "processing",
+                            "pending",
+                            "scheduled",
+                            "abandoned",
+                            "completed",
+                            "canceled"
+                        ]
+                    },
+                    "billing": {
+                        "$ref": "#/components/schemas/BillingDetails"
+                    },
+                    "giftNote": {
+                        "$ref": "#/components/schemas/GiftNote"
+                    },
+                    "notes": {
+                        "type": "array"
+                    },
+                    "deliveryDate": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Cart": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "account": {
+                        "$ref": "#/components/schemas/Account"
+                    },
+                    "checkout": {
+                        "$ref": "#/components/schemas/Checkout"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "expiresAt": {
+                        "type": "string"
+                    },
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "nodes": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/CartItem"
+                                }
+                            },
+                            "pageInfo": {
+                                "type": "object"
+                            },
+                            "totalCount": {
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    "missingItems": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CartItem"
+                        }
+                    },
+                    "referenceId": {
+                        "type": "string"
+                    },
+                    "shop": {
+                        "$ref": "#/components/schemas/Shop"
+                    },
+                    "totalItemQuantity": {
+                        "type": "integer"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    },
+                    "surcharges": {
+                        "type": "array"
+                    },
+                    "taxSummary": {
+                        "$ref": "#/components/schemas/TaxSummary"
+                    }
+                }
+            },
+            "Checkout": {
+                "type": "object",
+                "properties": {
+                    "fulfillmentGroups": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FulfillmentGroups"
+                        }
+                    },
+                    "summary": {
+                        "$ref": "#/components/schemas/CartSummary"
+                    },
+                    "billing": {
+                        "$ref": "#/components/schemas/BillingDetails"
+                    },
+                    "giftNote": {
+                        "$ref": "#/components/schemas/GiftNote"
+                    }
+                }
+            },
+            "CartItem": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "odooProduct": {
+                        "type": "integer"
+                    },
+                    "categoryVariant": {
+                        "type": "integer"
+                    },
+                    "addedAt": {
+                        "type": "string"
+                    },
+                    "attributes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CartItemAttribute"
+                        }
+                    },
+                    "compareAtPrice": {
+                        "type": "object"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "imageURLs": {
+                        "type": "object"
+                    },
+                    "metafields": {
+                        "type": "array"
+                    }
+                }
+            },
+            "CartItemAttribute": {},
+            "CartSummary": {},
+            "FulfillmentGroup": {},
+            "TaxSummary": {},
+            "CartItemInput": {
+                "type": "object",
+                "properties": {
+                    "metafields": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MetafieldInput"
+                        }
+                    },
+                    "price": {
+                        "$ref": "#/components/schemas/MoneyInput"
+                    },
+                    "productConfiguration": {
+                        "$ref": "#/components/schemas/ProductConfigurationInput"
+                    },
+                    "quantity": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "MetafieldInput": {
+                "type": "object",
+                "properties": {
+                    "description": {
+                        "type": "string"
+                    },
+                    "key": {
+                        "type": "string"
+                    },
+                    "namespace": {
+                        "type": "string"
+                    },
+                    "scope": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    },
+                    "valueType": {
+                        "type": "string"
+                    }
+                }
+            },
+            "MoneyInput": {
+                "type": "object",
+                "properties": {
+                    "amount": {
+                        "type": "number"
+                    },
+                    "currencyCode": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ProductConfigurationInput": {
+                "type": "object",
+                "properties": {
+                    "productId": {
+                        "type": "string"
+                    },
+                    "productVariantId": {
+                        "type": "string"
+                    }
+                }
+            },
+            "CreateCartInput": {
+                "type": "object",
+                "properties": {
+                    "input": {
+                        "type": "object",
+                        "properties": {
+                            "createCartInput": {
+                                "type": "object",
+                                "properties": {
+                                    "items": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/CartItemInput"
+                                        }
+                                    },
+                                    "shopId": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "shopId": {
+                                "type": "string"
+                            },
+                            "draftOrderId": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "AddCartItemsInput": {
+                "type": "object",
+                "properties": {
+                    "input": {
+                        "type": "object",
+                        "properties": {
+                            "cartId": {
+                                "type": "string"
+                            },
+                            "cartToken": {
+                                "type": "string"
+                            },
+                            "accountId": {
+                                "type": "string"
+                            },
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/CartItemInput"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "UpdateCartItemsQuantityInput": {
+                "type": "object",
+                "properties": {
+                    "input": {
+                        "type": "object",
+                        "properties": {
+                            "cartId": {
+                                "type": "string"
+                            },
+                            "cartToken": {
+                                "type": "string"
+                            },
+                            "accountId": {
+                                "type": "string"
+                            },
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cartItemId": {
+                                            "type": "string"
+                                        },
+                                        "quantity": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "PlaceDraftOrderInput": {
+                "type": "object",
+                "properties": {
+                    "input": {
+                        "type": "object",
+                        "properties": {
+                            "draftOrder": {
+                                "type": "object",
+                                "properties": {
+                                    "_id": {
+                                        "type": "string"
+                                    },
+                                    "cartId": {
+                                        "type": "string"
+                                    },
+                                    "cartToken": {
+                                        "type": "string"
+                                    },
+                                    "accountId": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "created",
+                                            "processing",
+                                            "pending",
+                                            "scheduled",
+                                            "abandoned",
+                                            "completed",
+                                            "canceled"
+                                        ]
+                                    }
+                                }
+                            },
+                            "shopId": {
+                                "type": "string"
+                            }
+                        }
                     }
                 }
             }
