@@ -142,7 +142,7 @@
                 }
             }
         },
-        "cart/cart-items/update": {
+        "/cart/cart-items/update": {
             "post": {
                 "operationId": "updateCartItemsQuantityFromDraftOrders",
                 "summary": "Update cart item(s) quantity. Use absolute quantity. If updating to 0, the item will be removed.",
@@ -170,12 +170,115 @@
                 }
             }
         },
-        "cart/set-account": {
+        "/cart/set-account": {
             "post": {
                 "operationId": "addDraftOrderAccount",
                 "summary": "Add a single account to the cart",
                 "requestBody": {
-                    
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SetOrderAccountInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Account added into the cart",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DraftOrder"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cart/fulfillment-option/update": {
+            "post": {
+                "operationId": "updateFulfillmentOptionsForGroupFromDraftOrder",
+                "summary": "Updates a list of `availableFulfillmentOptions` according to the selected shipping address or pickup option",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateFulfillmentOptionsForGroupInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated `availableFulfillmentOptions` list on the cart",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cart"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cart/fulfillment-type": {
+            "post": {
+                "operationId": "updateFulfillmentTypeForGroupFromDraftOrder",
+                "summary": "Select a fulfillment type on the cart",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateFulfillmentTypeForGroupInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated fulfillmentType on the cart",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cart"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cart/shipping-address": {
+            "post": {
+                "operationId": "setShippingAddressFromDraftOrder",
+                "summary": "Allows to set a shipping address into the cart",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SetShippingAddressInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Shipping address selected on the cart",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cart"
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -791,6 +894,167 @@
                             },
                             "shopId": {
                                 "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "SetOrderAccountInput": {
+                "type": "object",
+                "properties": {
+                    "input": {
+                        "type": "object",
+                        "properties": {
+                            "accountId": {
+                                "type": "string"
+                            },
+                            "cartId": {
+                                "type": "string"
+                            },
+                            "cartToken": {
+                                "type": "string"
+                            },
+                            "shopId": {
+                                "type": "string"
+                            },
+                            "draftOrderId": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "UpdateFulfillmentOptionsForGroupInput": {
+                "type": "object",
+                "properties": {
+                    "input": {
+                        "type": "object",
+                        "properties": {
+                            "cartId": {
+                                "type": "string"
+                            },
+                            "cartToken": {
+                                "type": "string"
+                            },
+                            "fulfillmentGroupId": {
+                                "type": "string"
+                            },
+                            "accountId": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "UpdateFulfillmentTypeForGroupInput": {
+                "type": "object",
+                "properties": {
+                    "input": {
+                        "type": "object",
+                        "properties": {
+                            "cartId": {
+                                "type": "string"
+                            },
+                            "cartToken": {
+                                "type": "string"
+                            },
+                            "fulfillmentGroupId": {
+                                "type": "string"
+                            },
+                            "fulfillmentType": {
+                                "type": "string",
+                                "enum": [
+                                    "digital",
+                                    "pickup",
+                                    "shipping"
+                                ]
+                            },
+                            "accountId": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "SetShippingAddressInput": {
+                "type": "object",
+                "properties": {
+                    "input": {
+                        "type": "object",
+                        "properties": {
+                            "address": {
+                                "$ref": "#/components/schemas/AddressInput"
+                            },
+                            "addressId": {
+                                "type": "string"
+                            },
+                            "cartId": {
+                                "type": "string"
+                            },
+                            "cartToken": {
+                                "type": "string"
+                            },
+                            "accountId": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "AddressInput": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "reference": {
+                        "type": "string"
+                    },
+                    "geolocation": {
+                        "type": "object",
+                        "properties": {
+                            "latitude": {
+                                "type": "number"
+                            },
+                            "longitude": {
+                                "type": "number"
+                            }
+                        }
+                    },
+                    "metaddress": {
+                        "type": "object",
+                        "properties": {
+                            "administrative_area_level_1": {
+                                "type": "string"
+                            },
+                            "administrative_area_level_2": {
+                                "type": "string"
+                            },
+                            "neighborhood": {
+                                "type": "string"
+                            },
+                            "street_address": {
+                                "type": "string"
+                            },
+                            "sublocality": {
+                                "type": "string"
+                            },
+                            "distance": {
+                                "type": "object",
+                                "properties": {
+                                    "value": {
+                                        "type": "number"
+                                    },
+                                    "text": {
+                                        "type": "string"
+                                    }
+                                }
                             }
                         }
                     }

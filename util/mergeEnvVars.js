@@ -2,15 +2,18 @@ const filename = `${__dirname}/../config/swagger.json`;
 const file = require(filename);
 const fs = require('fs');
 
-module.exports = function (filename) {
+module.exports = function () {
     console.log("filename", filename);
-    if(file.arguments && file.arguments.info && file.arguments.info.title) {
-        file.arguments.info.title = process.env.DOCUMENTATION_NAME;
+    if(file && file.info && file.info.title) {
+        file.info.title = process.env.DOCUMENTATION_NAME;
+        console.log(file.info.title, process.env.DOCUMENTATION_NAME)
     }
+    console.log(JSON.stringify(file))
 
-    fs.writeFile(filename, JSON.stringify(file, null, 2), function writeJSON(err) {
-        if (err)
-            return console.log(err);
-        console.log('updated config.json');
-    });
+    // fs.writeFile(filename, JSON.stringify(file), function writeJSON(err) {
+    //     if (err)
+    //         return console.log(err);
+    //     console.log('updated config.json');
+    // });
+    return file;
 };
