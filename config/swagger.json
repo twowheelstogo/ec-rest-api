@@ -281,6 +281,22 @@
                     }
                 }
             }
+        },
+        "/orders": {
+            "post": {
+                "operationId": "placeOrderFromDraftOrder",
+                "summary": "Place an order for the shop. The order will be placed only if authorization is successful for all submitted payments",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PlaceOrderInput"
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -402,6 +418,38 @@
                     }
                 }
             },
+            "BillingDetailsInput": {
+                "type": "object",
+                "properties": {
+                    "customerName": {
+                        "type": "string"
+                    },
+                    "nit": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "depto": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "isCf": {
+                        "type": "boolean"
+                    },
+                    "partnerId": {
+                        "type": "integer"
+                    }
+                }
+            },
             "GiftNote": {
                 "type": "object",
                 "properties": {
@@ -416,7 +464,38 @@
                     }
                 }
             },
+            "GiftNoteInput": {
+                "type": "object",
+                "properties": {
+                    "sender": {
+                        "type": "string"
+                    },
+                    "receiver": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
             "OrderNote": {
+                "type": "object",
+                "properties": {
+                    "account": {
+                        "$ref": "#/components/schemas/Account"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    }
+                }
+            },
+            "OrderNoteInput": {
                 "type": "object",
                 "properties": {
                     "account": {
@@ -581,6 +660,7 @@
                     }
                 }
             },
+            "FulfillmentGroups": {},
             "Cart": {
                 "type": "object",
                 "properties": {
@@ -1057,6 +1137,167 @@
                                 }
                             }
                         }
+                    }
+                }
+            },
+            "PlaceOrderInput": {
+                "type": "object",
+                "properties": {
+                    "input": {
+                        "type": "object",
+                        "properties": {
+                            "order": {
+                                "$ref": "#/components/schemas/OrderInput"
+                            },
+                            "payments": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/PaymentInput"
+                                }
+                            },
+                            "billing": {
+                                "$ref": "#/components/schemas/BillingDetailsInput"
+                            },
+                            "giftNote": {
+                                "$ref": "#/components/schemas/GiftNoteInput"
+                            },
+                            "accountId": {
+                                "type": "string"
+                            },
+                            "draftOrderId": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "OrderInput": {
+                "type": "object",
+                "properties": {
+                    "cartId": {
+                        "type": "string"
+                    },
+                    "currencyCode": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "fulfillmentGroups": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/OrderFulfillmentGroupInput"
+                        }
+                    },
+                    "shopId": {
+                        "type": "string"
+                    },
+                    "billing": {
+                        "$ref": "#/components/schemas/BillingDetailsInput"
+                    },
+                    "giftNote": {
+                        "$ref": "#/components/schemas/GiftNoteInput"
+                    },
+                    "notes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/OrderNoteInput"
+                        }
+                    },
+                    "deliveryDate": {
+                        "type": "string"
+                    }
+                }
+            },
+            "OrderFulfillmentGroupInput": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "shippingAddress": {
+                                "$ref": "#/components/schemas/AddressInput"
+                            },
+                            "pickupDetails": {
+                                "$ref": "#/components/schemas/PickupDetailsInput"
+                            }
+                        }
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "addedAt": {
+                                    "type": "string"
+                                },
+                                "price": {
+                                    "type": "number"
+                                },
+                                "productConfiguration": {
+                                    "$ref": "#/components/schemas/ProductConfigurationInput"
+                                },
+                                "quantity": {
+                                    "type": "integer"
+                                },
+                                "metafields": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/MetafieldInput"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "selectedFulfillmentMethodId": {
+                        "type": "string"
+                    },
+                    "shopId": {
+                        "type": "string"
+                    },
+                    "totalPrice": {
+                        "type": "number"
+                    },
+                    "type": {
+                        "type": "array",
+                        "enum": [
+                            "digital",
+                            "pickup",
+                            "shipping"
+                        ]
+                    }
+                }
+            },
+            "PickupDetailsInput": {
+                "type": "object",
+                "properties": {
+                    "datetime": {
+                        "type": "string"
+                    },
+                    "location": {
+                        "$ref": "#/components/schemas/AddressInput"
+                    }
+                }
+            },
+            "PaymentInput": {
+                "type": "object",
+                "properties": {
+                    "amount": {
+                        "type": "number"
+                    },
+                    "billingAddress": {
+                        "$ref": "#/components/schemas/AddressInput"
+                    },
+                    "data": {
+                        "type": "json"
+                    },
+                    "method": {
+                        "type": "string",
+                        "enum": [
+                            "none",
+                            "payments_cash",
+                            "epay_card"
+                        ]
                     }
                 }
             }
