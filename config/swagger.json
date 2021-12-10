@@ -58,6 +58,57 @@
                 }
             }
         },
+        "/accounts": {
+            "get": {
+                "operationId": "accounts",
+                "summary": "Get a list of all registered accounts",
+                "parameters": {
+                    "name": "Authorization",
+                    "in": "header",
+                    "description": "An authorization header",
+                    "required": true,
+                    "type": "string"
+                },
+                "responses": {
+                    "200": {
+                        "description": "The given array list of accounts",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Account"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "operationId": "createAccountWithoutCredentials",
+                "summary": "Creates a new account without access credentials",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateAccountInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The created account",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Account"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/draftOrder": {
             "post": {
                 "operationId": "placeDraftOrder",
@@ -1298,6 +1349,60 @@
                             "payments_cash",
                             "epay_card"
                         ]
+                    }
+                }
+            },
+            "CreateAccountInput": {
+                "type": "object",
+                "properties": {
+                    "input": {
+                        "type": "object",
+                        "properties": {
+                            "bio": {
+                                "type": "string"
+                            },
+                            "emails": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "address": {
+                                            "type": "string"
+                                        },
+                                        "provides": {
+                                            "type": "string"
+                                        },
+                                        "verified": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "picture": {
+                                "type": "string"
+                            },
+                            "shopId": {
+                                "type": "string"
+                            },
+                            "userId": {
+                                "type": "string"
+                            },
+                            "username": {
+                                "type": "string"
+                            },
+                            "phone": {
+                                "type": "string"
+                            },
+                            "firstName": {
+                                "type": "string"
+                            },
+                            "lastName": {
+                                "type": "string"
+                            }
+                        }
                     }
                 }
             }
