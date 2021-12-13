@@ -10,11 +10,15 @@
             "description": "Development server"
         }
     ],
+    "security": [
+        {
+            "BearerAuth": []
+        }
+    ],
     "paths": {
         "/shop": {
             "get": {
                 "operationId": "primaryShop",
-                "parameters": {},
                 "responses": {
                     "200": {
                         "description": "Gets the primary shop",
@@ -62,13 +66,6 @@
             "get": {
                 "operationId": "accounts",
                 "summary": "Get a list of all registered accounts",
-                "parameters": {
-                    "name": "Authorization",
-                    "in": "header",
-                    "description": "An authorization header",
-                    "required": true,
-                    "type": "string"
-                },
                 "responses": {
                     "200": {
                         "description": "The given array list of accounts",
@@ -351,6 +348,12 @@
         }
     },
     "components": {
+        "securitySchemes": {
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        },
         "schemas": {
             "Shop": {
                 "type": "object",
