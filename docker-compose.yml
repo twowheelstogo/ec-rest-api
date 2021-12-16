@@ -1,9 +1,8 @@
-
 version: '3.4'
 networks:
-  reaction:
+  web:
     external:
-      name: reaction.localhost
+      name: web
 services:
   rest_api:
     image: luiscelano/ec-rest-api:1.0.0-beta
@@ -21,14 +20,13 @@ services:
       - "traefik.http.routers.rest_api-secure.rule=Host(`restapi.lulisgt.com`)"
       - "traefik.http.routers.rest_api-secure.tls=true"
       - "traefik.http.routers.rest_api-secure.service=rest_api"
-      - "traefik.http.services.rest_api.loadbalancer.server.port=3000"
+      - "traefik.http.services.rest_api.loadbalancer.server.port=5000"
       - "traefik.docker.network=web"
       - "traefik.http.routers.rest_api-secure.tls.certresolver=le"
       - "traefik.http.routers.rest_api-secure.tls.domains[0].main=lulisgt.com"
       - "traefik.http.routers.rest_api-secure.tls.domains[0].sans=*.lulisgt.com"
 
     networks:
-        default:
-        reaction:
+        web:
     ports:
       - 5000:5000

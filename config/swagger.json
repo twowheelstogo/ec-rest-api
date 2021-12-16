@@ -25,7 +25,24 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Shop"
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "boolean"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "default": 200
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "primaryShop": {
+                                                    "$ref": "#/components/schemas/Shop"
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -51,9 +68,26 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Orders"
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "boolean"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "default": 200
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "orders": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/Orders"
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -72,7 +106,27 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Account"
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "boolean"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "default": 200
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "accounts": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/Account"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -98,7 +152,24 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Account"
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "boolean"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "default": 200
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "createAccountWithoutCredentials": {
+                                                    "$ref": "#/components/schemas/Account"
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -126,7 +197,29 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/DraftOrder"
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "boolean"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "default": 200
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "placeDraftOrder": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "draftOrder": {
+                                                            "$ref": "#/components/schemas/DraftOrder"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -154,7 +247,29 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/DraftOrder"
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "boolean"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "default": 200
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "createDraftOrderCart": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "draftOrder": {
+                                                            "$ref": "#/components/schemas/DraftOrder"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
